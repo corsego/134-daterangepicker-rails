@@ -1,7 +1,11 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+require 'open-uri'
+path = "https://raw.githubusercontent.com/ruby-conferences/ruby-conferences.github.io/master/_data/conferences.yml"
+uri = URI.open(path)
+yaml = YAML.load_file uri, permitted_classes: [Date]
+yaml.each do |event|
+  Event.create(
+    name: event['name'],
+    location: event['location'],
+    start_date: event['start_date'].to_datetime,
+  )
+end
