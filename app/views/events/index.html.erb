@@ -1,5 +1,21 @@
 <h1>Events</h1>
 
+<h3>HTML input field</h3>
+
+<script src="https://cdn.jsdelivr.net/gh/alumuko/vanilla-datetimerange-picker@latest/dist/vanilla-datetimerange-picker.js"></script>
+<input type="text" data-controller="daterangepicker" size="24" style="text-align:center">
+
+<h3>Search form</h3>
+
+<%= form_with url: events_path, method: :get do |form| %>
+  <%= form.text_field :start_date_between, value: params[:start_date_between], data: {controller: "daterangepicker"} %>
+  <%= form.submit "search" %>
+<% end %>
+
+<%= link_to "clear search", events_path if params[:start_date_between] %>
+
+<hr>
+
 <div id="events">
   <% @events.each do |event| %>
     <%= render event %>
